@@ -18,6 +18,10 @@ button1 = 19
 button2 = 26
 button3 = 13
 
+externalCommand = False
+commandRed = "salon red"
+commandYellow = "salon yellow"
+commandGreen = "salon green"
 
 GPIO.setmode(GPIO.BCM)
 
@@ -38,19 +42,27 @@ def lost():				#will run when the user loses
 
 
 def light(color):		#function which takes a string: R, Y or G and fires the corresponding GPIO pin and sound file
+	global externalCommand, commandRed, commandYellow, commandGreen
 	GPIO.setup(red, GPIO.OUT) #red
 	GPIO.setup(yellow, GPIO.OUT) #yellow
 	GPIO.setup(green, GPIO.OUT) #green
 	if color == "R":
 		GPIO.output(red, GPIO.HIGH)
 		os.system('aplay /do/simon/wavs/redSound.wav')
+		if externalCommand:
+			os.system(commandRed)
+		
 	if color == "Y":
 		GPIO.output(yellow, GPIO.HIGH)
 		os.system('aplay /do/simon/wavs/yellowSound.wav')
+		if externalCommand:	
+			os.system(commandYellow)
+
 	if color == "G":
 		GPIO.output(green, GPIO.HIGH)
 		os.system('aplay /do/simon/wavs/greenSound.wav')
-
+		if externalCommand:
+			os.system(commandGreen)
 		
 def allOff():			#turns all GPIO pins to low
 	GPIO.setup(red, GPIO.OUT) #red
@@ -59,6 +71,8 @@ def allOff():			#turns all GPIO pins to low
 	GPIO.output(red, GPIO.LOW)
 	GPIO.output(yellow, GPIO.LOW)
 	GPIO.output(green, GPIO.LOW)		
+	
+
 
 
 def chosen():			#this function will switch the GPIOs to input mode and return which button is pressed
