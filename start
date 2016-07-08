@@ -1,0 +1,5 @@
+#!/bin/bash
+# Source : https://www.youtube.com/watch?v=aIkYMTz0j7E
+
+echo "Simons Says"
+python /do/simon/python/simonsays.py
